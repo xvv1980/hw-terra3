@@ -1,8 +1,38 @@
-###cloud vars
-#variable "token" {
-#  type        = string
-#  description = "OAuth-token; https://cloud.yandex.ru/docs/iam/concepts/authorization/oauth-token"
-#}
+# Переменная словарь для консолидации общих для проекта переменных
+# Создана для тренировки сложных структур
+variable "project" {
+ type = object({
+    pref  = string
+    author   = string
+    vm_image_family  = string
+    metadata = object({
+    serial-port-enable = number,
+    ssh-keys = string
+ })
+ })
+ default = {
+    pref = "hw-terra3",
+    author = "xvv",
+    vm_image_family = "ubuntu-2004-lts",
+    metadata = {
+         serial-port-enable = 1,
+         ssh-keys           = "ubuntu:ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICdLgGD5Y1zZQ1EcMOSxtTne857FpnjCaqjU++SnYYAY xvv@host-15"
+    }
+  }
+}
+
+variable "vm" {
+  type = list(object({  
+                vm_name        = string, 
+                platform_id    = string,
+                cores          = number,
+                memory         = number,
+                core_fraction  = number,
+                boot_disk_size = number
+              })
+        )
+}
+
 
 variable "cloud_id" {
   type        = string
@@ -29,4 +59,12 @@ variable "vpc_name" {
   type        = string
   default     = "develop"
   description = "VPC network&subnet name"
+}
+
+variable "metadata" {  
+   type = map   
+   default=  {
+         serial-port-enable = 1,
+         ssh-keys           = "ubuntu:ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICdLgGD5Y1zZQ1EcMOSxtTne857FpnjCaqjU++SnYYAY xvv@host-15"
+    }
 }
