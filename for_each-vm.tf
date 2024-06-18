@@ -1,24 +1,28 @@
 resource "yandex_compute_instance" "db-servers" {
   for_each = toset(["0","1"])
 
-  name        = var.vms["${each.key}"].vm_name
-  platform_id = var.db_list["${each.key}"].platform_id
+  name        = var.vm["${each.key}"].vm_name
+  platform_id = var.vm["${each.key}"].platform_id
 
   resources {
-    cores         = var.db_list["${each.key}"].cores
-    memory        = var.db_list["${each.key}"].memory
-    core_fraction = var.db_list["${each.key}"].core_fraction
+    cores         = var.vm["${each.key}"].cores
+    memory        = var.vm["${each.key}"].memory
+    core_fraction = var.vm["${each.key}"].core_fraction
   }
 
   boot_disk {
     initialize_params {
       image_id = data.yandex_compute_image.ubuntu.image_id
       type     = "network-hdd"
-      size     = var.db_list["${each.key}"].boot_disk_size
+      size     = var.vm["${each.key}"].boot_disk_size
     }
   }
 
-  metadata = var.project.metadata
+  #metadata = var.project.metadata
+  metadata = {
+         serial-port-enable = 1,
+         ssh-keys           = "ubuntu:${local.ssh-keys}"
+    }
 
   scheduling_policy { preemptible = true }
 

@@ -24,7 +24,11 @@ resource "yandex_compute_instance" "web-servers" {
     }
   }
 
-  metadata = var.project.metadata
+  #metadata = var.project.metadata
+  metadata = {
+         serial-port-enable = 1,
+         ssh-keys           = "ubuntu:${local.ssh-keys}"
+    }
 
   scheduling_policy { preemptible = true }
 

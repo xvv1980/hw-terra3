@@ -1,5 +1,9 @@
 # Переменная словарь для консолидации общих для проекта переменных
 # Создана для тренировки сложных структур
+locals {
+  ssh-keys = file("~/.ssh/id_ed25519.pub")
+}
+
 variable "project" {
  type = object({
     pref  = string
