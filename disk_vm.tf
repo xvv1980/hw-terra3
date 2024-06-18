@@ -6,9 +6,9 @@ resource "yandex_compute_disk" "default" {
   size = "1"
 }
 
-resource "yandex_compute_instance" "storage" {
+resource "yandex_compute_instance" "storages" {
 
-  name        = "storage"
+  name        = "storage1"
   platform_id = "standard-v1"
 
   resources {
