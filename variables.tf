@@ -72,3 +72,4 @@ variable "metadata" {
          ssh-keys           = "ubuntu:ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICdLgGD5Y1zZQ1EcMOSxtTne857FpnjCaqjU++SnYYAY xvv@host-15"
     }
 }
+
